@@ -1,156 +1,200 @@
-### ✅ 1. **Understand the Domain (PET + Neuroendocrine Tumors)**  
 
-### **What is PET? (Positron Emission Tomography)**
-- A **nuclear medicine imaging technique**.
-- Detects **metabolic or biochemical activity** in tissues.
-- Inject a **radiotracer** → emits positrons → detects gamma rays when positrons annihilate with electrons.
-- Visualizes **functional** processes, not just structure (unlike CT/MRI).
+# 🧠 Postdoc Interview Prep: PET Imaging + Neuroendocrine Tumors (NETs)
 
----
+## ✅ 1. Understand the Domain (PET + Neuroendocrine Tumors)
 
-### **PET Imaging in Neuroendocrine Tumors (NETs)**
-- NETs often overexpress **somatostatin receptors (SSTRs)**.
-- **Specialized tracers** bind to these receptors to highlight tumors.
-
-#### Common Tracers:
-| Tracer | Use | Notes |
-|--------|-----|-------|
-| **FDG (Fluorodeoxyglucose)** | High-grade, aggressive NETs | Glucose metabolism |
-| **Ga-68 DOTATATE / DOTATOC** | Well-differentiated NETs | Binds to somatostatin receptors (high SSTR affinity) |
-| **F-18 DOPA** | Some NETs (esp. pancreatic) | Dopamine precursor |
+### 🔬 What is PET?
+- **Positron Emission Tomography** is a functional imaging technique.
+- Detects **metabolic and biochemical activity** using radiotracers.
+- Radiotracers emit positrons → annihilate with electrons → produce gamma rays → image reconstruction.
+- Functional (not anatomical) imaging — unlike CT or MRI.
 
 ---
 
-### **PET Data Characteristics**
-- 3D volume (voxel grid): `(x, y, z)` + sometimes time or tracer decay
-- Low resolution, noisy, often needs:
-  - **Denoising**
+### 🧬 PET Imaging in Neuroendocrine Tumors (NETs)
+- NETs often **overexpress somatostatin receptors (SSTRs)**.
+- Tracers like **Ga-68 DOTATATE** bind to these receptors, highlighting tumors.
+
+#### 🎯 Common Tracers
+| Tracer                     | Target NET Type            | Notes                                       |
+|----------------------------|----------------------------|---------------------------------------------|
+| **FDG (Fluorodeoxyglucose)** | Aggressive/high-grade NETs | Measures glucose metabolism                 |
+| **Ga-68 DOTATATE/DOTATOC** | Well-differentiated NETs   | Binds somatostatin receptors (SSTR2)        |
+| **F-18 DOPA**              | Pancreatic & midgut NETs   | Dopamine precursor, used for specific cases |
+
+---
+
+### 🧩 PET Data Characteristics
+- Volumetric data `(x, y, z)` — sometimes with time/decay dimension.
+- Common challenges:
+  - **Low resolution**, noisy signals
   - **Co-registration** with CT/MRI
-  - **Standardized uptake value (SUV)** calculation for quantification
+  - **SUV (Standardized Uptake Value)** quantification
 
 ---
 
-### **Clinical & Research Goals**
+### 🧪 Clinical & Research Goals
 - **Tumor detection/localization**
-- **Tumor grading (via SUV max, uptake patterns)**
-- **Response to treatment (compare pre/post scans)**
-- **Prognostic modeling**
+- **Tumor grading** via SUV metrics
+- **Treatment response** analysis
+- **Prognosis & survival modeling**
 
 ---
 
-### **PET + AI/ML Research Applications**
-- Tumor **segmentation**
-- **Classification** of tumor aggressiveness
-- Predicting **treatment response**
-- **Radiomics**: Extract quantitative features (texture, shape, intensity) from images
+### 🧠 PET + AI/ML Research Applications
+- Tumor **segmentation** (DL models: UNet, attention)
+- Lesion **classification**
+- **Response prediction** using radiomics
+- **Explainable AI** to support clinical decision-making
 
 ---
 
+## ✅ 2. PET Data Workflow for Machine Learning
 
-### ✅ 2. **Research Alignment**  
-My  PhD work (evaluation metrics, optimization, explainable AI) to show that:
-- We can design **custom pipelines** for imaging tasks
-- We can **critically evaluate model performance**
-- WE bring a **novel perspective** (NLP x imaging crossover can be an asset)
+| **Step**                     | **Purpose**                                         | **Tools/Libraries**                            | **Notes**                                                                 |
+|------------------------------|-----------------------------------------------------|------------------------------------------------|--------------------------------------------------------------------------|
+| **1. Load PET Data**         | Read DICOM/NIfTI scan files                         | `pydicom`, `NiBabel`, `SimpleITK`              | Clinical (DICOM) or research (NIfTI) formats                             |
+| **2. Preprocessing**         | Clean and normalize images                          | `SimpleITK`, `NumPy`, `NiBabel`                | Denoising, z-score/SUV normalization, voxel resampling                   |
+| **3. Co-registration**       | Align PET with CT/MRI                               | `ANTsPy`, `SimpleITK`                          | Spatial alignment for multi-modal analysis                               |
+| **4. ROI Segmentation**      | Identify regions (tumors/organs)                    | `MONAI`, `ITK-SNAP`, `SimpleITK`               | Manual or DL-based segmentation (e.g., 3D UNet)                           |
+| **5. Feature Extraction**    | Extract quantitative descriptors                    | `PyRadiomics`                                  | Shape, texture, intensity, wavelet features                              |
+| **6. Dataset Structuring**   | Format for ML modeling                              | `Pandas`, `NumPy`                              | Combine features and labels (classification/regression)                 |
+| **7. Modeling**              | Train models for classification/regression          | `scikit-learn`, `PyTorch`, `XGBoost`           | Predict tumor grade, treatment outcomes                                  |
+| **8. Evaluation/Explainability** | Assess performance & interpret results            | `SHAP`, `LIME`, `Captum`                       | Dice, AUC, saliency maps, feature attribution                            |
+| **9. Visualization**         | Visualize scan slices and outputs                   | `matplotlib`, `SimpleITK.Show`, `ITKWidgets`   | Diagnostic plots, region overlays, saliency outputs                      |
 
 
-> My work on evaluation metrics in NLP taught me how to design task-specific, interpretable models — which I believe transfers well to the imaging domain, especially for diagnostics and clinical decision support.
+![PET Data Workflow](img/PET_flowchart.png)
+
 
 ---
 
-### ✅  3. **Technical Fit**  
+## ✅ 3. Code Snippet: SUV Normalization + Visualization
 
-| JD Skill                      | Your Resume                        |
-|------------------------------|------------------------------------|
-| Statistical analysis tools   | Python, R, MATLAB, statistical ML  |
-| Imaging data analysis        | NLP → similar data pipelines       |
-| Research output              | Multiple papers, research profile  |
-| Mentoring                    | Teaching assistant, leadership     |
-| Communication                | Cross-functional roles, teaching   |
+```python
+import nibabel as nib
+import numpy as np
+import matplotlib.pyplot as plt
 
+# Load PET scan (NIfTI format)
+img = nib.load('pet_scan.nii.gz')
+data = img.get_fdata()
 
-### ✅ 4. **Mock for my recent Project**  
+# Normalize (approximate SUV-style z-score normalization)
+normalized = (data - np.mean(data)) / np.std(data)
 
-Project: Evaluation-Optimized ML Pipeline for Imaging/NLP (PhD Work, Adapted)
-
-S – Situation
-
-In my PhD, I was working on counterfactual story rewriting where standard metrics (e.g., BLEU) didn’t correlate well with human judgment.
-
-T – Task
-
-I aimed to design a new optimization pipeline using reinforcement learning to better align model outputs with task-specific goals.
-
-A – Action
-
-I implemented policy gradient (PG), best-of-n sampling (BPO), and direct preference optimization (DPO). Built full pipeline in PyTorch, with custom evaluation loop, reward shaping, and human-in-the-loop tuning.
-
-R – Result
-
-Improved human-rated relevance and factual consistency by 20–30%. The pipeline is modular and adaptable — e.g., could be used for radiomics-based classification in PET by plugging in domain-specific metrics as reward signals.
-
-
-
-> This kind of reward-aware pipeline could be used in PET image classification, where standard accuracy isn’t enough — for instance, prioritizing high recall on small, early-stage tumors. I can adapt the same strategy, use SUV as a reward feature, and optimize the model accordingly.”
-
-
-> I can apply similar rigorous evaluation and modeling methods to PET scan analysis — for example, defining a better interpretability metric for tumor segmentation.
-
-
-## ✅ 5. Some other concepts
-
-### **How does PET links to NLP?**
-
-
-> PET is a functional imaging modality that visualizes metabolic activity using radiotracers. In cancer, it's used to detect tumor metabolism, monitor therapy, and assess progression. In neuroendocrine tumors, PET tracers like Ga-68 DOTATATE target somatostatin receptors for high sensitivity and specificity.
-
-> While my background is NLP, I’ve worked on high-dimensional data with explainability needs. PET has parallels — such as noise handling, dimensionality reduction, and building models that clinicians can trust.
+# Plot middle slice
+slice_idx = data.shape[2] // 2
+plt.imshow(normalized[:, :, slice_idx], cmap='gray')
+plt.title("Normalized PET Slice")
+plt.axis('off')
+plt.show()
+```
 
 ---
 
-### **What’s unique about PET scans in neuroendocrine tumors?**
+## ✅ 4. Bonus: Deep Learning for PET Segmentation (Optional)
 
-
-> Neuroendocrine tumors overexpress somatostatin receptors — so radiotracers like Ga-68 DOTATATE bind specifically to these, offering precise tumor localization. Unlike FDG-PET used in many cancers, DOTATATE is preferred for well-differentiated NETs.
-
-
-> The ability to tailor tracer selection based on tumor grade introduces interesting modeling challenges, e.g., tracer-specific feature extraction or hybrid models with CT co-registration.
-
----
-
-### **How would you preprocess PET scan data for ML?**
-
-- **Denoise** (e.g. Gaussian smoothing)
-- **Normalize** intensities (e.g. z-score, SUV scaling)
-- **Co-register** to anatomical images (CT/MRI)
-- **Resample** to consistent resolution
-- **Segment** regions of interest (manual/auto/weak labels)
-- **Extract features** (e.g. radiomics, voxel intensities)
-
-> “I’d use NiBabel or SimpleITK for preprocessing, PyRadiomics for feature extraction, and integrate pipelines in Python using PyTorch or Scikit-Learn.”
+If segmentation is part of the project, mention:
+- Framework: `MONAI` (medical imaging + PyTorch)
+- Architecture: `3D UNet`, `Swin UNet`, or hybrid models
+- Loss functions: `DiceLoss`, `CrossEntropy`, `FocalLoss`
+- Metrics: Dice Coefficient, Hausdorff Distance
 
 ---
 
-### **What’s radiomics?**
+## ✅ 5. Research Alignment (PhD → PET)
 
-> Radiomics involves extracting quantitative features — such as texture, shape, and intensity — from medical images. These features can be used to build predictive models for tumor type, response to therapy, or prognosis. It’s analogous to feature engineering in NLP, but for 3D/4D image data.
+### Relevant Skills from Your PhD
+- **Policy Gradient, BPO, DPO** for preference-based optimization
+- **Explainability** in model outputs (saliency, attribution)
+- **Evaluation design** for aligning models to real-world success criteria
 
-### ✅  6. **Resources**
+> "My PhD focused on aligning model behavior with human goals using reinforcement learning and evaluation metric design. I see direct parallels with PET imaging, where model performance must match diagnostic needs — not just accuracy metrics."
 
-##  Mini Reading List – PET + Neuroendocrine Tumors
+---
 
-### 🔹 Basics of PET Imaging
-- [Introduction to PET](https://radiopaedia.org/articles/positron-emission-tomography) – Radiopaedia  
-- [NIH: What is a PET Scan?](https://www.cancer.gov/publications/dictionaries/cancer-terms/def/pet-scan) – NIH Glossary  
-- [PET Imaging Physics Primer (PDF)](https://humanhealth.iaea.org/HHW/MedicalPhysics/NuclearMedicine/NuclearMedicineImaging/PET/index.html) – IAEA
+## ✅ 6. Technical Fit
 
-### 🔹 Neuroendocrine Tumors
-- [NET Overview – American Cancer Society](https://www.cancer.org/cancer/neuroendocrine-tumor/about/what-is-net.html)  
-- [Role of PET in NETs – PubMed](https://pubmed.ncbi.nlm.nih.gov/29494896/) (Good for evidence-based discussion)
+| **Job Requirement**         | **Your Experience**                                           |
+|----------------------------|---------------------------------------------------------------|
+| Statistical analysis       | Python, R, MATLAB, `statsmodels`, `PyMC3`                     |
+| Image/data pipelines       | NLP workflows + transferable data handling experience         |
+| Programming & ML           | Python (expert), PyTorch, TensorFlow, Scikit-learn            |
+| Research output            | Multiple NLP/ML papers (evaluation, RL, XAI)                  |
+| Mentoring & communication  | Teaching assistant + industry leadership + stakeholder work   |
 
-### 🔹 AI in Medical Imaging
-- [Radiomics: Extracting more information from medical images](https://www.nature.com/articles/nrclinonc.2015.141) – Lambin et al. (2015)  
-- [Deep Learning in PET Imaging](https://pubmed.ncbi.nlm.nih.gov/32741878/) – Review paper  
-- [Ga-68 DOTATATE PET/CT for NET](https://pubmed.ncbi.nlm.nih.gov/26101092/) – Useful tracer-specific example
+---
 
+## ✅ 7. Tools & Libraries Checklist
+
+### 📦 Core Python/Data Tools
+- `NumPy`, `Pandas` – matrix/data ops
+- `matplotlib`, `seaborn` – plots, heatmaps
+- `statsmodels`, `scikit-learn`, `XGBoost` – stats + ML
+
+### 🧠 Medical Imaging Tools
+- `SimpleITK`, `NiBabel`, `pydicom` – reading, manipulating images
+- `ITK-SNAP`, `MONAI` – segmentation
+- `PyRadiomics` – radiomic feature extraction
+
+### 🔍 Explainability
+- `SHAP`, `LIME`, `Captum` – model interpretation
+- `TensorBoard`, `MLflow` – logging, tracking
+
+### ☁️ DevOps / Infra
+- `Docker`, `Kubernetes`, `Git`, `CI/CD`
+- `AWS`, `GCP`, `Azure`
+
+---
+
+## ✅ 8. Mock Project Walkthrough (STAR Format)
+
+### 🔬 Project: Reward-Aware Text Generation (PhD, Transferable to Imaging)
+
+**S – Situation**  
+Standard metrics (BLEU/ROUGE) failed to align with human feedback in NLG.
+
+**T – Task**  
+Build a reward-optimized pipeline using human preference signals.
+
+**A – Action**  
+- Implemented `Policy Gradient`, `BPO`, `DPO`
+- Created custom, task-specific evaluation metrics
+- Built full PyTorch pipeline with modular RL training
+
+**R – Result**  
+20–30% improvement in human-rated quality.
+> “This type of reward-aware optimization is highly transferable to PET analysis — especially in tasks like tumor classification, where domain-specific metrics like SUV distribution or false negatives are more critical than global accuracy.”
+
+---
+
+## ✅ 9. Conceptual Bridges (NLP ↔ PET)
+
+### Similarities:
+- Both involve **high-dimensional, noisy input**
+- Require **custom evaluation metrics**
+- Need **explainable, trustworthy models**
+- Prefer **human-in-the-loop feedback** for alignment
+
+> "I bring a mindset focused on **optimizing what matters** — not just what’s easy to measure."
+
+---
+
+## ✅ 10. Reading & Resource List
+
+### PET Imaging
+- [Radiopaedia – PET](https://radiopaedia.org/articles/positron-emission-tomography)
+- [NIH Cancer Terms – PET Scan](https://www.cancer.gov/publications/dictionaries/cancer-terms/def/pet-scan)
+- [IAEA Primer on PET](https://humanhealth.iaea.org/HHW/MedicalPhysics/NuclearMedicine/NuclearMedicineImaging/PET/index.html)
+
+### Neuroendocrine Tumors
+- [ACS – What is NET?](https://www.cancer.org/cancer/neuroendocrine-tumor/about/what-is-net.html)
+- [PubMed – Ga-68 DOTATATE PET for NET](https://pubmed.ncbi.nlm.nih.gov/26101092/)
+
+### AI in Medical Imaging
+- [Radiomics Overview – Nature](https://www.nature.com/articles/nrclinonc.2015.141)
+- [Deep Learning in PET Imaging – Review](https://pubmed.ncbi.nlm.nih.gov/32741878/)
+
+---
 
