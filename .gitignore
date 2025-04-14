@@ -172,3 +172,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+models/
+
+
+/data/agirard/Projects/Multi-Modal-Neuroendocrine-Tumor-Analysis-Pipeline/models/
