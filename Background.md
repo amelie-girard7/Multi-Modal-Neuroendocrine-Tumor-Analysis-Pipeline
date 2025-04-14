@@ -69,28 +69,35 @@ My  PhD work (evaluation metrics, optimization, explainable AI) to show that:
 | Communication                | Cross-functional roles, teaching   |
 
 
-### ✅ 4. **Mock recent Project**  
+### ✅ 4. **Mock for my recent Project**  
 
-**S**: Worked on counterfactual story rewriting models using custom training objectives.  
-**T**: Improve interpretability and evaluation beyond BLEU or ROUGE.  
-**A**: Designed new reward functions; integrated policy gradients; compared against baselines on real datasets.  
-**R**: Achieved significant improvement in human evaluation; work submitted to ACM and Springler journals.
+Project: Evaluation-Optimized ML Pipeline for Imaging/NLP (PhD Work, Adapted)
+
+S – Situation
+
+In my PhD, I was working on counterfactual story rewriting where standard metrics (e.g., BLEU) didn’t correlate well with human judgment.
+
+T – Task
+
+I aimed to design a new optimization pipeline using reinforcement learning to better align model outputs with task-specific goals.
+
+A – Action
+
+I implemented policy gradient (PG), best-of-n sampling (BPO), and direct preference optimization (DPO). Built full pipeline in PyTorch, with custom evaluation loop, reward shaping, and human-in-the-loop tuning.
+
+R – Result
+
+Improved human-rated relevance and factual consistency by 20–30%. The pipeline is modular and adaptable — e.g., could be used for radiomics-based classification in PET by plugging in domain-specific metrics as reward signals.
+
+
+
+> This kind of reward-aware pipeline could be used in PET image classification, where standard accuracy isn’t enough — for instance, prioritizing high recall on small, early-stage tumors. I can adapt the same strategy, use SUV as a reward feature, and optimize the model accordingly.”
 
 
 > I can apply similar rigorous evaluation and modeling methods to PET scan analysis — for example, defining a better interpretability metric for tumor segmentation.
 
----
 
-### ✅  5. **Questions for the interviewers**
-- What PET tracers are you using for neuroendocrine tumor detection?
-- How are you currently preprocessing and labeling the imaging data?
-- Is the goal classification, segmentation, or anomaly detection?
-- Is there a plan to deploy these models into clinical workflows?
-
-
----
-
-## 🧠 Some other concepts
+## ✅ 5. Some other concepts
 
 ### **How does PET links to NLP?**
 
